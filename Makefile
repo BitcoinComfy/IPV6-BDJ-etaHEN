@@ -41,7 +41,12 @@ CLASSPATH := $(BDJSDK_HOME)/target/lib/enhanced-stubs.zip:$(BDJSDK_HOME)/target/
 SOURCES   := $(wildcard src/org/homebrew/*.java)
 JFLAGS    := -Xlint:-options
 
-ELFLDR_URL  := https://github.com/ps5-payload-dev/elfldr/releases/latest/download/Payload.zip
+ITEMZFLOW_URL := https://pkg-zone.com/download/ps5/ITEM00001/latest
+PS5_EXPLORER_URL := https://pkg-zone.com/download/ps5/LAPY20011/latest
+PS5_TEMP_URL := https://pkg-zone.com/download/ps5/LAPY20012/latest
+AVATAR_CHANGER_URL := https://pkg-zone.com/download/ps5/LAPY20016/latest
+PS5_SPOOFER := https://github.com/MagicStuffCL/ps5Spoofer/releases/download/Ps5Spoofer2.xx-7.xx/ps5spoofer.zip
+ELFLDR_URL := https://github.com/ps5-payload-dev/elfldr/releases/latest/download/Payload.zip
 ETAHEN_URL :=  https://github.com/etaHEN/etaHEN/releases/download/2.0b/etaHEN-2.0b.bin
 
 #
@@ -53,12 +58,31 @@ TMPL_FILES := $(shell find $(BDJSDK_HOME)/resources/AVCHD/ -type f)
 DISC_DIRS  := $(patsubst $(BDJSDK_HOME)/resources/AVCHD%,discdir%,$(TMPL_DIRS)) \
               discdir/BDMV/JAR
 DISC_FILES := $(patsubst $(BDJSDK_HOME)/resources/AVCHD%,discdir%,$(TMPL_FILES)) \
-              discdir/BDMV/JAR/00000.jar discdir/elfldr.elf discdir/etaHEN.elf
+              discdir/BDMV/JAR/00000.jar discdir/elfldr.elf discdir/etaHEN.elf discdir/spoofer.elf discdir/PS5_ITEM00001_LATEST.pkg discdir/PS5_LAPY20011_LATEST.pkg discdir/PS5_LAPY20012_LATEST.pkg discdir/PS5_LAPY20016_LATEST.pkg
 
 all: $(DISC_LABEL).iso
 
 discdir:
 	mkdir -p $(DISC_DIRS)
+
+discdir/PS5_LAPY20011_LATEST.pkg:
+	mkdir -p discdir
+	wget -qO discdir/PS5_LAPY20011_LATEST.pkg $(PS5_EXPLORER_URL)
+
+discdir/PS5_LAPY20012_LATEST.pkg:
+	mkdir -p discdir
+	wget -qO discdir/PS5_LAPY20012_LATEST.pkg $(PS5_TEMP_URL)
+
+discdir/PS5_LAPY20016_LATEST.pkg:
+	mkdir -p discdir
+	wget -qO discdir/PS5_LAPY20016_LATEST.pkg $(AVATAR_CHANGER_URL)
+
+discdir/PS5_ITEM00001_LATEST.pkg:
+	mkdir -p discdir
+	wget -qO discdir/PS5_ITEM00001_LATEST.pkg $(ITEMZFLOW_URL)
+
+discdir/spoofer.elf:
+	wget -qO- $(PS5_SPOOFER) | gunzip -c - > $@
 
 discdir/elfldr.elf:
 	wget -qO- $(ELFLDR_URL) | gunzip -c - > $@
