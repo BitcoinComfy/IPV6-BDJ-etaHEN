@@ -168,6 +168,9 @@ public class MyXlet implements UserEventListener, Xlet {
 
 	listUI.addItem("Payloads from disc");
 	addPayload("etaHEN 2.0B - AIO HEN payload", "/disc/etaHEN.elf");
+	addPayload("PS5 SPOOFER", "/disc/spoofer.elf");
+	addPayload("Shows kernel build, os and sdk versions", "/disc/ps5-versions.elf");
+	addPayload("Get Os Version", "/disc/GetOsVersion_v1.0.2.elf");
 
 	logUI.setVisible(false);
     }
