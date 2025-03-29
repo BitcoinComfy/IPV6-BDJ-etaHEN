@@ -46,6 +46,8 @@ PS5_EXPLORER_URL := https://pkg-zone.com/download/ps5/LAPY20011/latest
 PS5_TEMP_URL := https://pkg-zone.com/download/ps5/LAPY20012/latest
 AVATAR_CHANGER_URL := https://pkg-zone.com/download/ps5/LAPY20016/latest
 PS5_SPOOFER := https://github.com/MagicStuffCL/ps5Spoofer/releases/download/Ps5Spoofer2.xx-7.xx/ps5spoofer.zip
+GET_OS_VERSION := https://github.com/logic-68/getOsVersion/releases/download/V1.0.2/GetOsVersion_v1.0.2.elf
+PS5_VERSION := https://github.com/SiSTR0/ps5-versions/releases/download/v1.0/ps5-versions.elf
 ELFLDR_URL := https://github.com/ps5-payload-dev/elfldr/releases/latest/download/Payload.zip
 ETAHEN_URL :=  https://github.com/etaHEN/etaHEN/releases/download/2.0b/etaHEN-2.0b.bin
 
@@ -58,7 +60,7 @@ TMPL_FILES := $(shell find $(BDJSDK_HOME)/resources/AVCHD/ -type f)
 DISC_DIRS  := $(patsubst $(BDJSDK_HOME)/resources/AVCHD%,discdir%,$(TMPL_DIRS)) \
               discdir/BDMV/JAR
 DISC_FILES := $(patsubst $(BDJSDK_HOME)/resources/AVCHD%,discdir%,$(TMPL_FILES)) \
-              discdir/BDMV/JAR/00000.jar discdir/elfldr.elf discdir/etaHEN.elf discdir/spoofer.elf discdir/PS5_ITEM00001_LATEST.pkg discdir/PS5_LAPY20011_LATEST.pkg discdir/PS5_LAPY20012_LATEST.pkg discdir/PS5_LAPY20016_LATEST.pkg
+              discdir/BDMV/JAR/00000.jar discdir/elfldr.elf discdir/etaHEN.elf discdir/spoofer.elf discdir/GetOsVersion_v1.0.2.elf discdir/ps5-versions.elf discdir/PS5_ITEM00001_LATEST.pkg discdir/PS5_LAPY20011_LATEST.pkg discdir/PS5_LAPY20012_LATEST.pkg discdir/PS5_LAPY20016_LATEST.pkg
 
 all: $(DISC_LABEL).iso
 
@@ -80,6 +82,14 @@ discdir/PS5_LAPY20016_LATEST.pkg:
 discdir/PS5_ITEM00001_LATEST.pkg:
 	mkdir -p discdir
 	wget -qO discdir/PS5_ITEM00001_LATEST.pkg $(ITEMZFLOW_URL)
+
+discdir/GetOsVersion_v1.0.2.elf:
+	mkdir -p discdir
+	wget -qO discdir/GetOsVersion_v1.0.2.elf $(GET_OS_VERSION)
+
+discdir/ps5-versions.elf:
+	mkdir -p discdir
+	wget -qO discdir/ps5-versions.elf $(PS5_VERSION)
 
 discdir/spoofer.elf:
 	wget -qO- $(PS5_SPOOFER) | gunzip -c - > $@
